@@ -19,4 +19,6 @@ public interface IHabitacionService {
 
     public void editHabitacion(Habitacion habitacion);
 
+    public List<Habitacion> findByHotel_IdHotel(Long idHotel);
+
 }

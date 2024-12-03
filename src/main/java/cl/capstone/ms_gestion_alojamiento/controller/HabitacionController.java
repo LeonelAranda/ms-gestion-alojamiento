@@ -150,4 +150,27 @@ public class HabitacionController {
         }
 
     }
+
+    @GetMapping("/habitacion/traerporhotel/{idHotel}")
+    public ResponseEntity<Response> traerHabitacionPorHotel(@PathVariable Long idHotel) {
+
+        Response response = new Response();
+        LocalDateTime currentDate = LocalDateTime.now();
+
+        List<Habitacion> habitacion = habitacionService.findByHotel_IdHotel(idHotel);
+
+        if (habitacion == null) {
+            response.setCodigoRetorno(-1);
+            response.setGlosaRetorno("Habitación no encotrada.");
+            response.setResultado(habitacion);
+            response.setTimestamp(currentDate);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        } else {
+            response.setCodigoRetorno(0);
+            response.setGlosaRetorno("Habitacion encontrada.");
+            response.setResultado(habitacion);
+            response.setTimestamp(currentDate);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
 }

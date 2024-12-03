@@ -47,4 +47,10 @@ public class HabitacionService implements IHabitacionService {
 
     }
 
+    @Override
+    public List<Habitacion> findByHotel_IdHotel(Long idHotel) {
+        List<Habitacion> habitacion = this.habitacionRepository.findByHotel_IdHotel(idHotel);
+        return habitacion;
+    }
+
 }
