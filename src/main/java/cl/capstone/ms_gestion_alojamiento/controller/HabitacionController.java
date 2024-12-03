@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -172,5 +173,16 @@ public class HabitacionController {
             response.setTimestamp(currentDate);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
+    }
+
+    @PatchMapping("/{idHabitacion}/estado/{idEstado}")
+    public ResponseEntity<Habitacion> updateEstadoHabitacion(
+            @PathVariable Long idHabitacion,
+            @PathVariable Long idEstado) {
+
+        // Llamar al servicio para actualizar el estado
+        Habitacion updatedHabitacion = habitacionService.updateEstadoHabitacion(idHabitacion, idEstado);
+
+        return ResponseEntity.ok(updatedHabitacion);
     }
 }

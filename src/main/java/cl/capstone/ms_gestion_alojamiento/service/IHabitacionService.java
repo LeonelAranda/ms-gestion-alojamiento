@@ -21,4 +21,6 @@ public interface IHabitacionService {
 
     public List<Habitacion> findByHotel_IdHotel(Long idHotel);
 
+    public Habitacion updateEstadoHabitacion(Long idHabitacion, Long idEstado);
+
 }

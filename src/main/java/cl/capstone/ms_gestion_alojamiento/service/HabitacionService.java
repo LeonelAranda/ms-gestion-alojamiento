@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.capstone.ms_gestion_alojamiento.model.Estado;
 import cl.capstone.ms_gestion_alojamiento.model.Habitacion;
+import cl.capstone.ms_gestion_alojamiento.repository.IEstadoRepository;
 import cl.capstone.ms_gestion_alojamiento.repository.IHabitacionRepository;
 
 @Service
@@ -13,6 +15,8 @@ public class HabitacionService implements IHabitacionService {
 
     @Autowired
     IHabitacionRepository habitacionRepository;
+    @Autowired
+    IEstadoRepository estadoRepository;
 
     @Override
     public List<Habitacion> getHabitaciones() {
@@ -51,6 +55,23 @@ public class HabitacionService implements IHabitacionService {
     public List<Habitacion> findByHotel_IdHotel(Long idHotel) {
         List<Habitacion> habitacion = this.habitacionRepository.findByHotel_IdHotel(idHotel);
         return habitacion;
+    }
+
+    @Override
+    public Habitacion updateEstadoHabitacion(Long idHabitacion, Long idEstado) {
+        // Buscar la habitación por ID
+        Habitacion habitacion = habitacionRepository.findById(idHabitacion)
+                .orElseThrow(() -> new RuntimeException("Habitación no encontrada"));
+
+        // Buscar el estado por ID
+        Estado estado = estadoRepository.findById(idEstado)
+                .orElseThrow(() -> new RuntimeException("Estado no encontrado"));
+
+        // Actualizar el estado de la habitación
+        habitacion.setEstado(estado);
+
+        // Guardar los cambios
+        return habitacionRepository.save(habitacion);
     }
 
 }
